@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      .de{
+         float: right;
+      }
+      .de1{
+         float: right;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    div{
+     background-color: cornflowerblue; 
+    } 
+    body{
+      background-color: cornflowerblue;
+    }
+  </style>
+  <body>
+    <div id="demo"><h1 align="center">welcome</h1></div>
+    <h1 align="center">this page help's you in knowing weather conditions of different countries</h1>
+    <script> 
+let suman = () => { 
+  let o = document.createElement("div"); 
+  document.body.appendChild(o);
+fetch("https://restcountries.com/v2/all", {
+method: "GET",
+})
+.then((data) => data.json())
+.then((response) => {
+guvi(response);
+})
+.catch((error) => {
+console.log(error);
+});
+};
+
+suman();
+
+let guvi = (data) => {  
+  for (let i = 0; i < data.length; i++)
+  {
+const img = document.createElement("img");
+img.src = data[i].flags.png;
+document.body.appendChild(img);
+document.write("<br>"+"country-name :" +data[i].name+"<br>");
+document.write("capital: "+data[i].capital);
+let btn = document.createElement("button");
+btn.innerHTML = "Click Me";
+btn.onclick= function(){
+  suman1(data[i].capital,i);
+}
+document.body.appendChild(btn);
+let m = document.createElement("input");
+m.id=""+i;
+m.name="in";
+m.value = "weather report" ; 
+document.body.appendChild(m);
+document.write("<br><br><br>");
+  }
+}; 
+let suman1 = (cap,i) => { 
+  let c = cap;
+fetch("http://api.openweathermap.org/data/2.5/weather?q="+c+"&APPID=2542eb0b65e4624a24669cbbb93d782e" ,{
+method: "GET",
+})
+.then((data) => data.json())
+.then((response) => {
+guvi2(response,i);
+})
+.catch((error) => {
+console.log(error);
+});
+};
+
+let guvi2 = (data,i) => {
+document.getElementById(""+i).value =" temp: "+ data.main.temp  +" temp_min:  "+   data.main.temp_min   +" temp_max:   "+     data.main.temp_max  +" temp_pressure    "+ data.main.pressure; 
+};
+</script> 
+</body>
+</html> 
+
+
