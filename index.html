@@ -16,15 +16,33 @@
   </head>
   <style>
     div{
-     background-color: cornflowerblue; 
+      display:inline-block;
+      margin-left: 3%;
+      margin-right:3%;
+      margin-top:3px;
+      margin-bottom:3px;
     } 
     body{
-      background-color: cornflowerblue;
+      
+      background-color: rgba(170, 170, 170,0.3);
+      
+    }
+    #dd1{
+      border: 3px solid black;
+      width:30px;
+      height: 30px;
+      
+    }
+    #demoing{
+      width:30px;
+      height:20px;
+      background-color: rgba(237, 15, 41, 0.2);
     }
   </style>
   <body>
-    <div id="demo"><h1 align="center">welcome</h1></div>
+    <h1 align="center">welcome</h1>
     <h1 align="center">this page help's you in knowing weather conditions of different countries</h1>
+    <h1 align="center">click on the image of flag to get weather details</h1>
     <script> 
 let suman = () => { 
   let o = document.createElement("div"); 
@@ -48,42 +66,99 @@ let guvi = (data) => {
   {
 const img = document.createElement("img");
 img.src = data[i].flags.png;
-document.body.appendChild(img);
-document.write("<br>"+"country-name :" +data[i].name+"<br>");
-document.write("capital: "+data[i].capital);
+
+img.style.display="flex";
+const s1 = document.createElement("div");
+s1.id="dd1";
+document.body.appendChild(s1);
+s1.append(img); 
+img.style.display="flex";
+img.style.marginLeft="80px";
+img.style.marginRight="30px";
+img.style.marginTop="30px";
+img.onclick=function(){
+  suman1(data[i].capital,i,s1,data[i].flags.png);
+}
+s1.style.border="0px solid black";
+s1.style.width="40%";
+s1.style.height="70%";
+const d1 = document.createElement("div");
+d1.id="demoing";
+d1.style.border="2px solid black";
+d1.style.width="200px";
+d1.style.height="70px";
+d1.style.padding="20px";
+d1.style.marginTop="30px";
+d1.style.marginLeft="90px";
+d1.style.borderRadius="18px";
+d1.style.alignItems="center";
+d1.style.backgroundColor="retrowagan";
+//s1.style.backgroundColor=;
+s1.style.borderRadius="20px";
+const p  = document.createElement("p");
+//p.innerHTML=`country-name : ${data[i].name} capital: ${data[i].capital}`;
+p.style.padding="32px";
+p.style.marginBottom="153px";
+p.style.marginLeft="30px";
+s1.append(d1);
+d1.innerHTML=`country-name : ${data[i].name}<br>capital: ${data[i].capital}`
+//document.write("<br>"+"country-name :" +data[i].name+"<br>");
+//document.write("capital: "+data[i].capital);
 let btn = document.createElement("button");
 btn.innerHTML = "Click Me";
 btn.onclick= function(){
-  suman1(data[i].capital,i);
+  suman1(data[i].capital,i,i1);
 }
-document.body.appendChild(btn);
+//document.body.appendChild(btn);
 let m = document.createElement("input");
 m.id=""+i;
 m.name="in";
 m.value = "weather report" ; 
-document.body.appendChild(m);
-document.write("<br><br><br>");
+//document.body.appendChild(m);
+//document.write("<br><br><br>");
   }
 }; 
-let suman1 = (cap,i) => { 
+let suman1 = (cap,i,s,i1) => { 
   let c = cap;
 fetch("http://api.openweathermap.org/data/2.5/weather?q="+c+"&APPID=2542eb0b65e4624a24669cbbb93d782e" ,{
 method: "GET",
 })
 .then((data) => data.json())
 .then((response) => {
-guvi2(response,i);
+guvi2(response,i,s,i1);
 })
 .catch((error) => {
 console.log(error);
 });
 };
 
-let guvi2 = (data,i) => {
+let guvi2 = (data,i,s,i1) => {
+  const a = document.createElement("div"); 
+  a.id="demo1";
+  a.style.display="inline-block";
+  a.style.border="2px solid black";
+  a.style.width="110px";
+  a.style.height="70px"; 
+  a.style.marginTop="60px";
+  a.style.marginBottom="2px";
+  a.style.marginLeft="120px";
+  a.style.borderRadius="8px";
+  
+  const q = document.createElement("img");
+  q.src=i1;
+  q.style.opacity="0.5";
+  a.innerHTML=`temp: ${data.main.temp} <br> temp-pressure: ${ data.main.pressure}`;
+  //s.append(q);
+  a.style.padding="10px";
+  a.style.backgroundColor="#A8EB12";
+  s.append(a);
+
 document.getElementById(""+i).value =" temp: "+ data.main.temp  +" temp_min:  "+   data.main.temp_min   +" temp_max:   "+     data.main.temp_max  +" temp_pressure    "+ data.main.pressure; 
+
 };
 </script> 
 </body>
 </html> 
+
 
 
